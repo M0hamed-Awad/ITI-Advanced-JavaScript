@@ -27,16 +27,16 @@ let customObject = {
   location: "SV",
   addr: "123 st.",
   getSetGen: function () {
-    var self = this;
-    for (var key in self) {
-      if (typeof self[key] !== "function" && self.hasOwnProperty(key)) {
+    var that = this;
+    for (var key in that) {
+      if (typeof that[key] !== "function" && that.hasOwnProperty(key)) {
         (function (property) {
           let propertyCapitalizedName = property[0].toUpperCase() + property.slice(1);
-          self["get" + propertyCapitalizedName] = function () {
-            return self[property];
+          that["get" + propertyCapitalizedName] = function () {
+            return that[property];
           };
-          self["set" + propertyCapitalizedName] = function (value) {
-            self[property] = value;
+          that["set" + propertyCapitalizedName] = function (value) {
+            that[property] = value;
           };
         })(key);
       }
