@@ -31,6 +31,14 @@ function Box(height, width, length, volume, material, content) {
     return -1;
   };
 
+  this.getNumberOfBooks = function (books) {
+    let numberOfBooks = 0;
+    for (let i = 0; i < books.length; i++) {
+      numberOfBooks += books[i].numberOfCopies;
+    }
+    return numberOfBooks;
+  };
+
   this.addBook = function (book) {
     // Check if the Book already Exist or Not
     let bookIndex = getBookIndex(this.content, book.title);
@@ -42,7 +50,6 @@ function Box(height, width, length, volume, material, content) {
     else {
       this.content.push(book);
     }
-    this.numberOfBooks += book.numberOfCopies; // Increase the Number of Books ANYWAY
   };
 
   this.removeBook = function (bookTitle) {
@@ -58,7 +65,6 @@ function Box(height, width, length, volume, material, content) {
       } else {
         this.content.splice(bookIndex, 1);
       }
-      this.numberOfBooks--; // Decrease the Number of Books ANYWAY
     }
     // Else throw Error
     else {
@@ -120,8 +126,10 @@ let book2 = new Book(
 );
 
 mainBox.addBook(book1);
-console.log("Current Number of Books: " + mainBox.numberOfBooks);
 mainBox.displayBooks();
+console.log(
+  "Current Number of Books: " + mainBox.getNumberOfBooks(mainBox.content)
+);
 
 console.log(
   "%c===================================================================",
@@ -129,8 +137,10 @@ console.log(
 );
 
 mainBox.addBook(book1);
-console.log("Current Number of Books: " + mainBox.numberOfBooks);
 mainBox.displayBooks();
+console.log(
+  "Current Number of Books: " + mainBox.getNumberOfBooks(mainBox.content)
+);
 
 console.log(
   "%c===================================================================",
@@ -138,8 +148,10 @@ console.log(
 );
 
 mainBox.addBook(book2);
-console.log("Current Number of Books: " + mainBox.numberOfBooks);
 mainBox.displayBooks();
+console.log(
+  "Current Number of Books: " + mainBox.getNumberOfBooks(mainBox.content)
+);
 
 console.log(
   "%c===================================================================",
@@ -147,8 +159,10 @@ console.log(
 );
 
 mainBox.removeBook("Surrounded By Idiots");
-console.log("Current Number of Books: " + mainBox.numberOfBooks);
 mainBox.displayBooks();
+console.log(
+  "Current Number of Books: " + mainBox.getNumberOfBooks(mainBox.content)
+);
 
 console.log(
   "%c===================================================================",
@@ -156,8 +170,10 @@ console.log(
 );
 
 mainBox.removeBook("Surrounded By Idiots");
-console.log("Current Number of Books: " + mainBox.numberOfBooks);
 mainBox.displayBooks();
+console.log(
+  "Current Number of Books: " + mainBox.getNumberOfBooks(mainBox.content)
+);
 
 console.log(
   "%c===================================================================",
@@ -165,5 +181,7 @@ console.log(
 );
 
 // mainBox.removeBook("Surrounded By Idiots");
-console.log("Current Number of Books: " + mainBox.numberOfBooks);
 mainBox.displayBooks();
+console.log(
+  "Current Number of Books: " + mainBox.getNumberOfBooks(mainBox.content)
+);
