@@ -14,14 +14,14 @@
  *    you can define any function needed for both box and book objects
  */
 
-function Box(height, width, length, volume, material, content) {
+function Box(height, width, length, volume, material, boxContent = []) {
   this.height = height;
   this.width = width;
   this.length = length;
   this.volume = volume;
   this.material = material;
-  this.content = content || [];
-  this.numberOfBooks = this.content.length;
+  let content = boxContent;
+  let totalNumberOfBooks = content.length;
 
   let getBookIndex = function (books, bookTitle) {
     let isExist = false;
@@ -31,39 +31,45 @@ function Box(height, width, length, volume, material, content) {
     return -1;
   };
 
-  this.getNumberOfBooks = function (books) {
+  this.getNumberOfDistinctBooks = function () {
+    return totalNumberOfBooks;
+  };
+
+  this.getTotalNumberOfBooks = function () {
     let numberOfBooks = 0;
-    for (let i = 0; i < books.length; i++) {
-      numberOfBooks += books[i].numberOfCopies;
+    for (let i = 0; i < content.length; i++) {
+      numberOfBooks += content[i].numberOfCopies;
     }
     return numberOfBooks;
   };
 
   this.addBook = function (book) {
     // Check if the Book already Exist or Not
-    let bookIndex = getBookIndex(this.content, book.title);
+    let bookIndex = getBookIndex(content, book.title);
     if (bookIndex !== -1) {
       // If yes ==> Increase the Book number of Copies  ==> Do not Re-Add it to the Content
-      this.content[bookIndex].numberOfCopies += book.numberOfCopies;
+      content[bookIndex].numberOfCopies += book.numberOfCopies;
     }
     // Else ==> Add the Book to the Content
     else {
-      this.content.push(book);
+      content.push(book);
+      totalNumberOfBooks++; // Increase the Total Number of Books
     }
   };
 
   this.removeBook = function (bookTitle) {
     // Check if there Books first or Not
-    if (this.content.length === 0) throw Error("There is no Books");
+    if (content.length === 0) throw Error("There is no Books");
     // Check if the Book Exist or Not first
-    let bookIndex = getBookIndex(this.content, bookTitle);
+    let bookIndex = getBookIndex(content, bookTitle);
     // If yes remove it
     if (bookIndex !== -1) {
       // Check if there Multiple Copies of the Book
-      if (this.content[bookIndex].numberOfCopies > 1) {
-        this.content[bookIndex].numberOfCopies--;
+      if (content[bookIndex].numberOfCopies > 1) {
+        content[bookIndex].numberOfCopies--;
       } else {
-        this.content.splice(bookIndex, 1);
+        content.splice(bookIndex, 1);
+        totalNumberOfBooks--; // Decrease the Total Number of Books
       }
     }
     // Else throw Error
@@ -77,14 +83,16 @@ function Box(height, width, length, volume, material, content) {
       "%cBox Content:",
       "color: #F7D426; font-size: 20px; font-weight: bold;"
     );
-    for (let i = 0; i < this.content.length; i++) {
+    for (let i = 0; i < content.length; i++) {
       console.log(
-        "Book Title: " +
-          this.content[i].title +
+        "(" +
+          (i + 1) +
+          "). Book Title: " +
+          content[i].title +
           ", Author: " +
-          this.content[i].author +
+          content[i].author +
           ", Number of Copies: " +
-          this.content[i].numberOfCopies
+          content[i].numberOfCopies
       );
     }
   };
@@ -113,7 +121,7 @@ let book1 = new Book(
   "Thomas Erikson",
   200,
   "St. Martin's Essentials",
-  1
+  2
 );
 
 let book2 = new Book(
@@ -127,8 +135,9 @@ let book2 = new Book(
 
 mainBox.addBook(book1);
 mainBox.displayBooks();
+console.log("Total Number of Books: " + mainBox.getTotalNumberOfBooks());
 console.log(
-  "Current Number of Books: " + mainBox.getNumberOfBooks(mainBox.content)
+  "Total Number of Distinct Books: " + mainBox.getNumberOfDistinctBooks()
 );
 
 console.log(
@@ -138,8 +147,9 @@ console.log(
 
 mainBox.addBook(book1);
 mainBox.displayBooks();
+console.log("Total Number of Books: " + mainBox.getTotalNumberOfBooks());
 console.log(
-  "Current Number of Books: " + mainBox.getNumberOfBooks(mainBox.content)
+  "Total Number of Distinct Books: " + mainBox.getNumberOfDistinctBooks()
 );
 
 console.log(
@@ -149,8 +159,9 @@ console.log(
 
 mainBox.addBook(book2);
 mainBox.displayBooks();
+console.log("Total Number of Books: " + mainBox.getTotalNumberOfBooks());
 console.log(
-  "Current Number of Books: " + mainBox.getNumberOfBooks(mainBox.content)
+  "Total Number of Distinct Books: " + mainBox.getNumberOfDistinctBooks()
 );
 
 console.log(
@@ -160,8 +171,9 @@ console.log(
 
 mainBox.removeBook("Surrounded By Idiots");
 mainBox.displayBooks();
+console.log("Total Number of Books: " + mainBox.getTotalNumberOfBooks());
 console.log(
-  "Current Number of Books: " + mainBox.getNumberOfBooks(mainBox.content)
+  "Total Number of Distinct Books: " + mainBox.getNumberOfDistinctBooks()
 );
 
 console.log(
@@ -171,8 +183,9 @@ console.log(
 
 mainBox.removeBook("Surrounded By Idiots");
 mainBox.displayBooks();
+console.log("Total Number of Books: " + mainBox.getTotalNumberOfBooks());
 console.log(
-  "Current Number of Books: " + mainBox.getNumberOfBooks(mainBox.content)
+  "Total Number of Distinct Books: " + mainBox.getNumberOfDistinctBooks()
 );
 
 console.log(
@@ -180,8 +193,10 @@ console.log(
   "color: #FF426E"
 );
 
+// Error on Removing Non-Existing Book
 // mainBox.removeBook("Surrounded By Idiots");
 mainBox.displayBooks();
+console.log("Total Number of Books: " + mainBox.getTotalNumberOfBooks());
 console.log(
-  "Current Number of Books: " + mainBox.getNumberOfBooks(mainBox.content)
+  "Total Number of Distinct Books: " + mainBox.getNumberOfDistinctBooks()
 );
