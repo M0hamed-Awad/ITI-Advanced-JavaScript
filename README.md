@@ -1,7 +1,7 @@
 # 🚀 Advanced JavaScript | ITI Intake 46
 
 [![Tech](https://img.shields.io/badge/Tech-JS--ES6+-yellow.svg)]()
-[![Course](https://img.shields.io/badge/Course-ITI_Intake_45-orange.svg)]()
+[![Organization](https://img.shields.io/badge/Organization-ITI_Intake_46-orange.svg)]()
 [![Status](https://img.shields.io/badge/Status-Completed-success.svg)]()
 
 This repository documents my transition from functional scripting to **JavaScript Engineering**. It focuses on the internal mechanics of the JavaScript engine, advanced Object-Oriented patterns, and metaprogramming techniques mastered during the ITI track.
